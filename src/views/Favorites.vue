@@ -1,7 +1,7 @@
 <template>
   <div class="favorites">
     <favorite-video-box
-      v-for="video in videos"
+      v-for="video in favorites"
       :key="video.id"
       :video="video"
     ></favorite-video-box>
@@ -9,30 +9,21 @@
 </template>
 
 <script>
-import axios from "axios";
-
+import { mapGetters } from "vuex";
 import FavoriteVideoBox from "@/components/FavoriteVideoBox";
 
 export default {
   components: {
     FavoriteVideoBox,
   },
-  data() {
-    return {
-      videos: [],
-    };
-  },
-  async mounted() {
-    const { data } = await axios.get(
-      "https://my-json-server.typicode.com/modanisa/bootcamp-video-db/videos"
-    );
-    this.videos = data.filter(v => !!v.favorite);
+  computed: {
+    ...mapGetters(["favorites"]),
   },
 };
 </script>
 
 <style>
 .favorites {
-    width: 90%;
+  width: 90%;
 }
 </style>

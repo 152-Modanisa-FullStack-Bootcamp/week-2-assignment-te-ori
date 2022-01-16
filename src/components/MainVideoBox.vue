@@ -1,6 +1,6 @@
 <template>
   <div class="main-video">
-    <button class="favorite-button" :class="{ favorite: video.favorite }">
+    <button class="favorite-button" :class="{ favorite: isVideoFavorite }" @click="toggleFavorite">
       favori
     </button>
     <router-link :to="{ name: 'watch', params: { id: video.id } }">
@@ -33,6 +33,11 @@ export default {
       isRequired: true,
     },
   },
+  computed: {
+    isVideoFavorite() {
+      return this.$store.getters.isFavorite(this.video.id);
+    },
+  },
   data() {
     return {
       currentCover: "",
@@ -44,6 +49,9 @@ export default {
     },
     onMouseLeave() {
       this.currentCover = this.video.coverImage;
+    },
+    toggleFavorite() {
+      this.$store.dispatch("toggleFavorite", this.video)
     },
   },
   mounted() {

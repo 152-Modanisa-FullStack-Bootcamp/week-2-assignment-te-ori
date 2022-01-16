@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import {mapGetters} from "vuex";
 
 import MainVideoBox from "@/components/MainVideoBox";
 
@@ -17,17 +17,8 @@ export default {
   components: {
     MainVideoBox,
   },
-  data() {
-    return {
-      videos: [],
-    };
-  },
-
-  async mounted() {
-    const { data } = await axios.get(
-      "https://my-json-server.typicode.com/modanisa/bootcamp-video-db/videos"
-    );
-    this.videos = data;
+  computed: {
+    ...mapGetters(["videos"])
   },
 };
 </script>
